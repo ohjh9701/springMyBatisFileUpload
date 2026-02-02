@@ -18,7 +18,7 @@
 	</update>
 
 	<delete id="delete">
-
+		DELETE FROM item WHERE id = #{id}
 	</delete>
 
 	<select id="list" resultType="Item"> 

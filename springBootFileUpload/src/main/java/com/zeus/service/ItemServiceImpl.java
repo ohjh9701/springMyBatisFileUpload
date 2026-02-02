@@ -34,9 +34,8 @@ public class ItemServiceImpl implements ItemService{
 
 	@Override
 	public int delete(Item item) throws Exception {
-		return 0;
-		// TODO Auto-generated method stub
-		
+		int count = itemMapper.delete(item);
+		return count;
 	}
 
 	@Override

@@ -146,33 +146,52 @@ public class ItemController {
 	}
 
 	@PostMapping("/update")
-    public String itemUpdate(Item item, Model model) throws Exception {
-        log.info("itemUpdate" + item.toString());
-        MultipartFile file = item.getPicture();
-        String oldUrl = null;
-        if (file != null && file.getSize() > 0) {
-            // 기존의 있는 외부저장소에 있는 파일을 삭제
-            Item oldItem = itemService.read(item);
-            oldUrl = oldItem.getUrl();
+	public String itemUpdate(Item item, Model model) throws Exception {
+		log.info("itemUpdate" + item.toString());
+		MultipartFile file = item.getPicture();
+		String oldUrl = null;
+		if (file != null && file.getSize() > 0) {
+			// 기존의 있는 외부저장소에 있는 파일을 삭제
+			Item oldItem = itemService.read(item);
+			oldUrl = oldItem.getUrl();
 
-            // 새로 등록 할 파일 
-            log.info("originalName: " + file.getOriginalFilename());
-            log.info("size: " + file.getSize());
-            log.info("contentType: " + file.getContentType());
-            String createdFileName = uploadFile(file.getOriginalFilename(), file.getBytes());
-            item.setUrl(createdFileName);
-        }
-        int count = itemService.update(item);
+			// 새로 등록 할 파일
+			log.info("originalName: " + file.getOriginalFilename());
+			log.info("size: " + file.getSize());
+			log.info("contentType: " + file.getContentType());
+			String createdFileName = uploadFile(file.getOriginalFilename(), file.getBytes());
+			item.setUrl(createdFileName);
+		}
+		int count = itemService.update(item);
 
-        if (count > 0) {
-            // 테이블에 수정내용이 완료가 되고 그리고 나서 이전 이미지 파일을 삭제한다.
-            if(oldUrl != null)    deleteFile(oldUrl);
-            model.addAttribute("message", "%s 상품 수정이 성공되었습니다.".formatted(item.getName()));
-            return "item/success";
-        }
-        model.addAttribute("message", "%s 상품 수정이 실패되었습니다.".formatted(item.getName()));
-        return "item/failed";
-    }
+		if (count > 0) {
+			// 테이블에 수정내용이 완료가 되고 그리고 나서 이전 이미지 파일을 삭제한다.
+			if (oldUrl != null)
+				deleteFile(oldUrl);
+			model.addAttribute("message", "%s 상품 수정이 성공되었습니다.".formatted(item.getName()));
+			return "item/success";
+		}
+		model.addAttribute("message", "%s 상품 수정이 실패되었습니다.".formatted(item.getName()));
+		return "item/failed";
+	}
+
+	@GetMapping("/delete")
+	public String delete(Item i, Model model) throws Exception {
+		log.info("delete item = " + i.toString());
+		Item item = itemService.read(i);
+		// 기존의 있는 외부저장소에 있는 파일을 삭제
+				String oldUrl = item.getUrl();
+				deleteFile(oldUrl);
+		int count = itemService.delete(item);
+		if (count > 0) {
+			if(oldUrl != null) deleteFile(oldUrl);
+			// 테이블에 수정내용이 완료가 되고 그리고 나서 이전 이미지 파일을 삭제한다.
+			model.addAttribute("message", "%s 상품 삭제가 성공되었습니다.".formatted(item.getName()));
+			return "item/success";
+		}
+		model.addAttribute("message", "%s 상품 삭제가 실패되었습니다.".formatted(item.getName()));
+		return "item/failed";
+	}
 
 	private MediaType getMediaType(String form) {
 		String formatName = form.toUpperCase();

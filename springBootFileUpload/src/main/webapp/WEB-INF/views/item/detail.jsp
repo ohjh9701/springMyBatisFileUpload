@@ -184,45 +184,24 @@ body {
 
 	<div class="detail-container">
 		<div class="detail-header">
-			<span class="post-no">MEMBER NO. ${member.no}</span>
-			<h1>${member.id}</h1>
+			<span class="post-no">ITEM ID. ${item.id}</span>
+			<h1>${item.name}</h1>
 			<div class="post-info">
-				<span>NAME: <b>${member.name}</b></span> <span>DATE: <b><fmt:formatDate
-							value="${member.regDate}" pattern="yyyy.MM.dd HH:mm" /></b></span>
+				<span>price: <b>${item.price}원</b></span>
 			</div>
 		</div>
-
-		<div class="btn-form">
-			<form:form modelAttribute="member">
-				<form:hidden path="no" />
-				<form:select path="authList[0].auth" disabled="true">
-					<form:option value="" label="=== 부여된 권한이 없습니다 ===" />
-					<form:option value="ROLE_USER" label="사용자" />
-					<form:option value="ROLE_MEMBER" label="회원" />
-					<form:option value="ROLE_ADMIN" label="관리자" />
-				</form:select>
-				<form:select path="authList[1].auth" disabled="true">
-					<form:option value="" label="=== 부여된 권한이 없습니다 ===" />
-					<form:option value="ROLE_USER" label="사용자" />
-					<form:option value="ROLE_MEMBER" label="회원" />
-					<form:option value="ROLE_ADMIN" label="관리자" />
-				</form:select>
-				<form:select path="authList[2].auth" disabled="true">
-					<form:option value="" label="=== 부여된 권한이 없습니다 ===" />
-					<form:option value="ROLE_USER" label="사용자" />
-					<form:option value="ROLE_MEMBER" label="회원" />
-					<form:option value="ROLE_ADMIN" label="관리자" />
-				</form:select>
-			</form:form>
+		
+		<div class="btn-area">
+			<img alt="상품이미지 ${item.name}" src="/item/display?id=${item.id}" width="400" />
 		</div>
 
 		<div class="btn-area">
-			<a href="/member/memberList" class="btn btn-list">회원리스트</a>
+			<a href="/item/list" class="btn btn-list">상품리스트</a>
 
 			<div class="btn-group">
-				<a href="/member/updateForm?no=${member.no}" class="btn btn-edit">회원수정</a>
-				<a href="/member/delete?no=${member.no}"
-					class="btn btn-delete" onclick="return confirm('정말 삭제하시겠습니까?')">회원탈퇴</a>
+				<a href="/item/updateForm?id=${item.id}" class="btn btn-edit">상품수정</a>
+				<a href="/item/delete?id=${item.id}"
+					class="btn btn-delete" onclick="return confirm('정말 삭제하시겠습니까?')">상품삭제</a>
 			</div>
 		</div>
 

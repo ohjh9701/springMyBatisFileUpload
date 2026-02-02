@@ -15,9 +15,8 @@ public class ItemServiceImpl implements ItemService{
 	private ItemMapper itemMapper;
 
 	@Override
-	public void create(Item item) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public int create(Item item) throws Exception {
+		return itemMapper.create(item);
 	}
 
 	@Override
@@ -27,13 +26,15 @@ public class ItemServiceImpl implements ItemService{
 	}
 
 	@Override
-	public void update(Item item) throws Exception {
+	public int update(Item item) throws Exception {
+		return 0;
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(Item item) throws Exception {
+	public int delete(Item item) throws Exception {
+		return 0;
 		// TODO Auto-generated method stub
 		
 	}

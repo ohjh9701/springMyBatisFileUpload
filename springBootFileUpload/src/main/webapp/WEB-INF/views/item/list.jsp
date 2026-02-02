@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>T1 Community | Member List</title>
+<title>T1 Community | Item List</title>
 <style>
     :root {
         --t1-red: #E2012D;
@@ -175,19 +175,19 @@
     
     <div class="container">
     <div class="header-box">
-    <h1>BOARD <span>LIST</span></h1>
+    <h1>ITEM <span>LIST</span></h1>
     
     <div class="btn-group">
-        <a href="/member/memberList" class="btn-write">List View</a>
-        <a href="/member/insertForm" class="btn-write">회원가입</a>
+        <a href="/item/list" class="btn-write">상품리스트</a>
+        <a href="/item/createForm" class="btn-write">상품등록</a>
     </div>
 </div>
 
     <div class="search-container">
-        <form action="/member/search" method="get" class="search-form">
+        <form action="/item/search" method="get" class="search-form">
             <select name="searchType" class="search-select">
-                <option value="id">ID</option>
-                <option value="name">NAME</option>
+                <option value="name">이름</option>
+                <option value="description">내용</option>
             </select>
             <input type="text" name="keyword" class="search-input" placeholder="Search mission...">
             <button type="submit" class="btn-search">검색</button>
@@ -197,33 +197,29 @@
     <table class="t1-table">
         <thead>
             <tr>
-                <th width="10%">No</th>
-                <th width="20%">ID</th>
-                <th width="20%">PW</th>
-                <th width="20%">NAME</th>
-                <th width="10%">COIN</th>
-                <th width="20%">DATE</th>
+                <th width="10%">ID</th>
+                <th width="25%">NAME</th>
+                <th width="25%">PRICE</th>
+                <th width="40%">DESCRIPTION</th>
             </tr>
         </thead>
         <tbody>
             <c:choose>
-                <c:when test="${not empty memberList}">
-                    <c:forEach var="member" items="${memberList}">
+                <c:when test="${not empty itemList}">
+                    <c:forEach var="item" items="${itemList}">
                         <tr>
-                            <td>${member.no}</td>
+                            <td>${item.id}</td>
                             <td class="title-cell">
-                                <a href="/member/detail?no=${member.no}">${member.id}</a>
+                                <a href="/item/detail?id=${item.id}">${item.name}</a>
                             </td>
-                            <td>${member.pw}</td>
-                            <td>${member.name}</td>
-                            <td>${member.coin}</td>
-                            <td><fmt:formatDate value="${member.regDate}" pattern="yyyy.MM.dd" /></td>
+                            <td>${item.price}원</td>
+                            <td>${item.description}</td>
                         </tr>
                     </c:forEach>
                 </c:when>
                 <c:otherwise>
                     <tr>
-                        <td colspan="6" style="padding: 50px; color: #555;">가입된 회원이 없습니다.</td>
+                        <td colspan="4" style="padding: 50px; color: #555;">등록된 상품이 없습니다.</td>
                     </tr>
                 </c:otherwise>
             </c:choose>
